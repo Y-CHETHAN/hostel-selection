@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Room Selection{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center my-4">Room Selection</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="hostel">Hostel:</label>
+                    <select class="form-control" id="hostel" name="hostel" required>
+                        <option value="boys">Boys Hostel</option>
+                        <option value="girls">Girls Hostel</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="registration_number">Registration Number:</label>
+                    <input type="text" class="form-control" id="registration_number" name="registration_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone_number">Phone Number:</label>
+                    <input type="tel" class="form-control" id="phone_number" name="phone_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="parent_phone_number">Parent's Phone Number:</label>
+                    <input type="tel" class="form-control" id="parent_phone_number" name="parent_phone_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="room_type">Preferred Room Type:</label>
+                    <select class="form-control" id="room_type" name="room_type" required>
+                        <option value="single">Single Room</option>
+                        <option value="double">Double Room</option>
+                        <option value="triple">Triple Room</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
