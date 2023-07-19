@@ -26,7 +26,6 @@ urlpatterns = [
     path('amenities/', views.amenities, name='amenities'),
     path('mess/', views.mess, name='mess'),
     path('login/', views.user_login, name='login'),
-    path('room_confirmation/', views.room_confirmation, name='room_confirmation'),
     path('contact/', views.contact, name='contact'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('room/form/<int:room_id>/', views.room_form, name='room_form'),

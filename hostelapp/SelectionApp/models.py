@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 class Hostel(models.Model):
     name = models.CharField(max_length=100)
@@ -35,3 +37,12 @@ class Student(models.Model):
     def __str__(self):
         return self.name
 
+@receiver(post_delete, sender=Student)
+def update_room_availability(sender, instance, **kwargs):
+    room = instance.room
+    if room:
+        room.availability += 1
+        room.save()
+
+# Connect the signal handler function to the post_delete signal of the Student model
+post_delete.connect(update_room_availability, sender=Student)

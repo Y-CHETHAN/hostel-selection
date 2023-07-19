@@ -8,34 +8,46 @@
             <h2 class="text-center my-4">Room Booking</h2>
             <div class="card">
                 <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                    {% if form_submitted %}
+                        <div class="alert alert-success">
+                            You have successfully booked a room.
                         </div>
-                        <div class="form-group">
-                            <label for="registration_number">Registration Number:</label>
-                            <input type="text" class="form-control" id="registration_number" name="registration_number" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone_number">Phone Number:</label>
-                            <input type="text" class="form-control" id="phone_number" name="phone_number" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="parent_phone_number">Parent's Phone Number:</label>
-                            <input type="text" class="form-control" id="parent_phone_number" name="parent_phone_number" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="room_number">Room Number:</label>
-                            <input type="text" class="form-control" id="room_number" name="room_number" value="{{ room.room_number }}" required readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="room_type">Room Type:</label>
-                            <input type="text" class="form-control" id="room_type" name="room_type" value="{{ room.room_type }}" required readonly>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Book Room</button>
-                    </form>
+                    {% else %}
+                        {% if existing_booking %}
+                            <div class="alert alert-warning">
+                                You have already submitted a room booking.
+                            </div>
+                        {% else %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="name">Name:</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registration_number">Registration Number:</label>
+                                    <input type="text" class="form-control" id="registration_number" name="registration_number" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone_number">Phone Number:</label>
+                                    <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="parent_phone_number">Parent's Phone Number:</label>
+                                    <input type="text" class="form-control" id="parent_phone_number" name="parent_phone_number" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="room_number">Room Number:</label>
+                                    <input type="text" class="form-control" id="room_number" name="room_number" value="{{ room.room_number }}" required readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="room_type">Room Type:</label>
+                                    <input type="text" class="form-control" id="room_type" name="room_type" value="{{ room.room_type }}" required readonly>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Book Room</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>
