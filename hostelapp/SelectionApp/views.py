@@ -67,10 +67,18 @@ def availability_girls(request):
     return render(request, 'availability_girls.html', {'rooms': girls_rooms, 'room_types': room_types})
 
 
+from django.db.models import Q
+
 @login_required(login_url='login')
 def room_form(request, room_id):
     room = get_object_or_404(Room, pk=room_id)
-    existing_booking = Student.objects.filter(registration_number=request.user.username).exists()
+
+    # Check if the user has an existing booking in either boys or girls hostel
+    existing_booking = Student.objects.filter(
+        Q(registration_number=request.user.username, room__hostel__name='boys') |
+        Q(registration_number=request.user.username, room__hostel__name='girls')
+    ).exists()
+
     if existing_booking:
         return render(request, 'room_form.html', {'form_submitted': True})
 
@@ -78,7 +86,14 @@ def room_form(request, room_id):
         form = RoomBookingForm(request.POST)
         if form.is_valid():
             registration_number = form.cleaned_data['registration_number']
-            if Student.objects.filter(registration_number=registration_number).exists():
+
+            # Check if the user has an existing booking in either boys or girls hostel
+            existing_booking = Student.objects.filter(
+                Q(registration_number=registration_number, room__hostel__name='boys') |
+                Q(registration_number=registration_number, room__hostel__name='girls')
+            ).exists()
+
+            if existing_booking:
                 return render(request, 'room_form.html', {'form_submitted': True})
 
             booking = form.save(commit=False)
@@ -95,6 +110,7 @@ def room_form(request, room_id):
         form = RoomBookingForm()
 
     return render(request, 'room_form.html', {'room': room, 'form': form})
+
 
 def contact(request):
     return render(request, 'contact.html')
