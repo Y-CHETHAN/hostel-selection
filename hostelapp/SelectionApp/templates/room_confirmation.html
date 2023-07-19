@@ -15,7 +15,8 @@
                         <p class="card-text">Registration Number: {{ student.registration_number }}</p>
                         <p class="card-text">Phone Number: {{ student.phone_number }}</p>
                         <p class="card-text">Parent's Phone Number: {{ student.parent_phone_number }}</p>
-                        <p class="card-text">Room Type: {{ student.preferred_room_type }}</p>
+                        <p class="card-text">Room Type: {{ student.room.room_type }}</p>
+                        <p class="card-text">Room Number: {{ student.room.room_number }}</p>
                     {% else %}
                         <p class="card-text">No room confirmation details available.</p>
                     {% endif %}

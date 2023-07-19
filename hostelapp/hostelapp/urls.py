@@ -21,14 +21,13 @@ from django.contrib.auth.views import LogoutView
 urlpatterns = [
     path('home/', views.home, name='home'),
     path('admin/', admin.site.urls),
+    path('availability/<str:hostel>/', views.availability, name='availability'),
+    path('availability/<str:hostel>/room_form/', views.room_form, name='room_form'),
     path('amenities/', views.amenities, name='amenities'),
     path('mess/', views.mess, name='mess'),
     path('login/', views.user_login, name='login'),
-    path('room_selection/', views.room_selection, name='room_selection'),
     path('room_confirmation/', views.room_confirmation, name='room_confirmation'),
-    path('payment/', views.payment, name='payment'),
-    path('confirmation/', views.confirmation, name='confirmation'),
-    path('payment_error/', views.payment_error, name='payment_error'),
     path('contact/', views.contact, name='contact'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('room/form/<int:room_id>/', views.room_form, name='room_form'),
 ]

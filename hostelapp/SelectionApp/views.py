@@ -3,6 +3,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from .models import Hostel, Room, Student
+from .forms import RoomBookingForm
+from django.shortcuts import get_object_or_404
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -19,44 +22,77 @@ def user_login(request):
 @login_required(login_url='login')
 def home(request):
     username = request.user.username
-    hostels = Hostel.objects.all()
-    rooms = Room.objects.all()
-    return render(request, 'home.html', {'username': username, 'hostels': hostels, 'rooms': rooms})
+    return render(request, 'home.html', {'username': username})
 
 @login_required(login_url='login')
-def room_selection(request):
-    username = request.user.username
+def availability(request, hostel):
+    if hostel == 'boys':
+        return availability_boys(request)
+    elif hostel == 'girls':
+        return availability_girls(request)
+    else:
+        return redirect('home')
+
+@login_required(login_url='login')
+def availability_boys(request):
+    boys_hostel = Hostel.objects.get(name='boys')
+    boys_rooms = Room.objects.filter(hostel=boys_hostel)
+    return render(request, 'availability_boys.html', {'rooms': boys_rooms})
+
+@login_required(login_url='login')
+def availability_girls(request):
+    girls_hostel = Hostel.objects.get(name='girls')
+    girls_rooms = Room.objects.filter(hostel=girls_hostel)
+    return render(request, 'availability_girls.html', {'rooms': girls_rooms})
+
+from django.contrib import messages
+
+@login_required(login_url='login')
+def room_form(request, room_id):
+    room = get_object_or_404(Room, pk=room_id)
+    existing_booking = Student.objects.filter(registration_number=request.user.username).exists()
+    if existing_booking:
+        messages.error(request, 'You have already submitted a room booking.')
+        return redirect('home')
+
     if request.method == 'POST':
-        # Process room selection logic
-        messages.success(request, 'Room successfully booked')
-        return redirect('room_confirmation')
-    hostels = Hostel.objects.all()
-    return render(request, 'room_selection.html', {'username': username, 'hostels': hostels})
+        form = RoomBookingForm(request.POST)
+        if form.is_valid():
+            registration_number = form.cleaned_data['registration_number']
+            if Student.objects.filter(registration_number=registration_number).exists():
+                messages.error(request, 'Registration number already exists.')
+                return redirect('room_form', room_id=room_id)
+
+            booking = form.save(commit=False)
+            booking.user = request.user
+            booking.room = room
+            booking.save()
+
+            room.availability -= 1
+            room.save()
+
+            return redirect('room_confirmation')
+    else:
+        initial_data = {
+            'room_number': room.room_number,
+            'room_type': room.room_type,
+        }
+        form = RoomBookingForm(initial=initial_data)
+
+    context = {'room': room, 'form': form}
+    return render(request, 'room_form.html', context)
+
+
+
+
 
 @login_required(login_url='login')
 def room_confirmation(request):
-    username = request.session.get('username')
-    student = Student.objects.filter(registration_number=username, room__isnull=False).last()
+    username = request.user.username
+    student = Student.objects.filter(registration_number=username).last()
     return render(request, 'room_confirmation.html', {'student': student})
 
-def payment(request):
-    username = request.user.username
-    student = Student.objects.filter(room__isnull=False).last()
-    if request.method == 'POST':
-        # Process payment logic here
-        messages.success(request, 'Payment successful')
-        return redirect('confirmation')
-    return render(request, 'payment.html', {'username': username, 'student': student})
 
-@login_required(login_url='login')
-def confirmation(request):
-    username = request.user.username
-    return render(request, 'confirmation.html', {'username': username})
-
-@login_required(login_url='login')
-def payment_error(request):
-    username = request.user.username
-    return render(request, 'payment_error.html', {'username': username})
 
 def contact(request):
     return render(request, 'contact.html')

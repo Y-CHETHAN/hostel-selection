@@ -6,37 +6,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <h2 class="text-center my-4">Welcome, {{ username }}!</h2>
-            <h4 class="text-center my-4">Select a Hostel:</h4>
+            <h4 class="text-center my-4">Select a Hostel</h4>
             <div class="text-center">
-                <a href="{% url 'room_selection' %}?hostel=boys" class="btn btn-primary m-3">Boys Hostel</a>
-                <a href="{% url 'room_selection' %}?hostel=girls" class="btn btn-primary m-3">Girls Hostel</a>
-            </div>
-            <div class="card mt-4">
-                <div class="card-header">
-                    Available Rooms
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Room Number</th>
-                                <th scope="col">Room Type</th>
-                                <th scope="col">Availability</th>
-                                <th scope="col">Cost</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for room in rooms %}
-                                <tr>
-                                    <td>{{ room.room_number }}</td>
-                                    <td>{{ room.room_type }}</td>
-                                    <td>{{ room.availability }}</td>
-                                    <td>{{ room.cost }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                <a href="{% url 'availability' hostel='boys' %}" class="btn btn-primary m-3">Boys Hostel</a>
+                <a href="{% url 'availability' hostel='girls' %}" class="btn btn-primary m-3">Girls Hostel</a>
             </div>
         </div>
     </div>

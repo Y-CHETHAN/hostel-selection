@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Boys Hostel Availability{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center my-4">Boys Hostel Availability</h2>
+            <div class="card mt-4">
+                <div class="card-header">
+                    Available Rooms
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Room Number</th>
+                                <th scope="col">Room Type</th>
+                                <th scope="col">Availability</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for room in rooms %}
+                                <tr>
+                                    <td>{{ room.room_number }}</td>
+                                    <td>{{ room.room_type }}</td>
+                                    <td>{{ room.availability }}</td>
+                                    <td>
+                                        <a href="{% url 'room_form' room_id=room.id %}" class="btn btn-primary">Book</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
