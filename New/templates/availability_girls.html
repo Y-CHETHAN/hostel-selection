@@ -1,0 +1,170 @@
+{% extends 'base2.html' %}
+
+{% block title %}Girls Hostel Availability{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Girls Hostel Availability</title>
+</head>
+<style>
+    /* Add the following styles to your existing styles or create a new style block */
+    body{
+        background-color: rgb(0, 0, 0);
+    }
+    .row {
+        margin: 20px 0;
+    }
+    
+    .text-center {
+        text-align: center;
+        color: #bfbfbf;
+    }
+    
+    .my-4 {
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+    }
+    
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    
+    .btn-primary {
+        color: #fff;
+        background-color: #000000;
+        border-color: #454a4f;
+    }
+    
+    .btn-primary:hover {
+        color: #fff;
+        background-color: #454a4f;
+        border-color: #ffffff;
+    }
+    
+    .card {
+        margin-top: 20px;
+    }
+    
+    .card-header {
+        background-color: #f7f7f7;
+        color: #000000;
+        text-align: left;
+    }
+    
+    .card-body {
+        padding: 20px;
+    }
+    
+    .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #212529;
+    }
+    
+    .table th,
+    .table td {
+        padding: 0.75rem;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+    
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+    }
+    
+    .table tbody + tbody {
+        border-top: 2px solid #dee2e6;
+    }
+    
+    .table-sm th,
+    .table-sm td {
+        padding: 0.3rem;
+    }
+    #room_type {
+        color: #ffffff; /* Set the desired text color */
+        background-color: #000000; /* Set the desired background color */
+        border: 1px solid #ffffff; /* Set the desired border color */
+    }
+    
+    #room_type option {
+        color: #000000; /* Set the desired text color for options */
+        background-color: #ffffff; /* Set the desired background color for options */
+    }
+    /* Change the focus style for dropdown options */
+    #room_type option:focus {
+        outline: none !important; /* Remove default blue outline */
+        background-color: #6c757d; /* Set the desired background color when focused */
+        color: #ffffff; /* Set the desired text color when focused */
+    }
+    /* Change the focus style for dropdown options */
+    #room_type option:checked {
+        outline: none; /* Remove default blue outline */
+        background-color: #6c757d; /* Set the desired background color when focused */
+        color: #ffffff; /* Set the desired text color when focused */
+    }
+</style>
+<body>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center my-4">Girls Hostel Availability</h2>
+            <form method="GET" action="{% url 'availability' hostel='girls' %}">
+                <label for="room_type"><p style="color: #787f85;">Select Room Type:</p></label>
+                <select name="room_type" id="room_type">
+                    <option value="">All</option>
+                    {% for room_type in room_types %}
+                        <option value="{{ room_type }}">{{ room_type }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </form>
+            <div class="card mt-4">
+                <div class="card-header">
+                    Available Rooms
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Room Number</th>
+                                <th scope="col">Room Type</th>
+                                <th scope="col">Availability</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for room in rooms %}
+                                <tr>
+                                    <td>{{ room.room_number }}</td>
+                                    <td>{{ room.room_type }}</td>
+                                    <td>{{ room.availability }}</td>
+                                    <td>
+                                        <a href="{% url 'room_form' room_id=room.id %}" class="btn btn-primary">Book</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

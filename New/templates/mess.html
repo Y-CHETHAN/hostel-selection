@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Hostel Mess{% endblock %}
+
+{% block content %}
+    <!-- <h2>Hostel Mess</h2>
+    <img src="{% static 'images/mess.jpg' %}" alt="Mess" class="img-fluid">
+    <ul>
+        <li>Well designed spacious and spotlessly maintained dining halls catering to different needs of students .</li>
+        <li>We have special, north Indian, south Indian, vegetarian, non-vegetarian categories of food served in different messes.</li>
+        <li>Special menus are provided during festival occasions.</li>
+        <li>Separate canteen is also available to cater to the needs of the students.</li>
+    </ul> -->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href='https://fonts.googleapis.com/css?family=Syncopate' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hostel</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+<style>
+    body{
+        background-color: black;
+    }
+    .page1 {
+    background: url('/static/images/mess.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    }
+
+    #branding {
+    margin: 8% 0 0 0;
+    display: block; 
+    text-align: center; 
+    }
+
+    #branding img {
+    display: block;
+    min-width: 70px;
+    width: 6.5%;
+    height: auto;
+    margin: 0 auto 5%;
+    }
+
+    #branding h1 {
+        font: normal 200 350%/1 'Syncopate';
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 10px;
+        margin-bottom: 4%;
+    }
+
+    #branding hr {
+        width: 20%;
+        height: 4px;
+        border: none;
+        background-color: rgba(255,255,255,0.3);
+        padding: 0;
+        margin-bottom: 0;
+    }
+
+    #branding h2 {
+    color: #fff;
+    font-size: 95%;
+    margin-top: 5%;
+    }
+    .mess-info {
+        color: #fff; /* Set your desired text color */
+        font-size: 18px; /* Set your desired font size */
+        margin-bottom: 10px; /* Set your desired margin */
+    }
+</style>
+<body>
+    <div class="container-fluid">
+        <div id="overlay"></div>
+        <nav>
+            <div class="menu-button">
+                <div class="menu-button-bar menu-bar1"></div>
+                <div class="menu-button-bar menu-bar2"></div>
+                <div class="menu-button-bar menu-bar3"></div>
+            </div><!-- /end .menu-button -->
+        </nav><!-- /end nav -->
+        <div class="wrapper">
+        <div class="page1">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="centered-content">
+                <div id="branding">
+                    <img src="http://imgh.us/logo_white_v3.svg" alt="" />
+                    <h1>Hostel Mess </h1>
+                    <hr />
+                    <h2>Revolutionizing Accommodation&nbsp;:&nbsp;Hostel Management at Its Best</h2>
+                </div><!-- /end #branding -->
+                <div class="mouse"><div class="wheel"></div>
+            </div><!-- /end .centered-content -->
+            </div>
+        </div>
+        </div><!-- /end .container-fluid -->
+        <li class="mess-info">Well designed spacious and spotlessly maintained dining halls catering to different needs of students</li>
+        <li class="mess-info">We have special, north Indian, south Indian, vegetarian, non-vegetarian categories of food served in different messes</li>
+        <li class="mess-info">Special menus are provided during festival occasions</li>
+        <li class="mess-info">Separate canteen is also available to cater to the needs of the students</li>
+    </div><!-- /end .container-fluid -->
+</body>
+</html>
+{% endblock %}

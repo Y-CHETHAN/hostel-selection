@@ -1,0 +1,302 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Amenities{% endblock %}
+
+{% block content %}
+    <!-- <h2>Hostel</h2>
+    <img src="{% static 'images/hostel.jpg' %}" alt="Hostel Amenities" class="img-fluid">
+    <ul>
+        <li>Two separate exclusive boys and girls hostel – 8 storied buildings which can accommodate 500 students each.</li>
+        <li>Single, 2 , 3 & 8 Bedded accommodation</li>
+        <li>Optional A/C facility</li>
+        <li>State of the art Gym & Indoor games</li>
+        <li>WIFI connectivity</li>
+        <li>24/7 in house medical care with 1000 beded Multi-Speciality Hospital within the campus</li>
+        <li>Entertainment halls with multi channel television facility</li>
+        <li>Open air movie screening facility for weekly movie shows</li>
+        <li>Exclusive visitors lounge</li>
+        <li>24/7 security vigilance</li>
+        <li>Treated RO water in all the floors for drinking purpose.</li>
+        <li>Solar hot water for bathing.</li>
+        <li>Clean Hygienic environment</li>
+        <li>Smoking – free campus</li>
+        <li>Ragging – free campus</li>
+    </ul> -->
+<script>
+    $(document).ready(function() {
+
+    var curPage = 1;
+    var numOfPages = $(".skw-page").length;
+    var animTime = 1000;
+    var scrolling = false;
+    var pgPrefix = ".skw-page-";
+
+    function pagination() {
+    scrolling = true;
+
+    $(pgPrefix + curPage).removeClass("inactive").addClass("active");
+    $(pgPrefix + (curPage - 1)).addClass("inactive");
+    $(pgPrefix + (curPage + 1)).removeClass("active");
+
+    setTimeout(function() {
+        scrolling = false;
+    }, animTime);
+    };
+
+    function navigateUp() {
+    if (curPage === 1) return;
+    curPage--;
+    pagination();
+    };
+
+    function navigateDown() {
+    if (curPage === numOfPages) return;
+    curPage++;
+    pagination();
+    };
+
+    $(document).on("mousewheel DOMMouseScroll", function(e) {
+    if (scrolling) return;
+    if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
+        navigateUp();
+    } else { 
+        navigateDown();
+    }
+    });
+
+    $(document).on("keydown", function(e) {
+    if (scrolling) return;
+    if (e.which === 38) {
+        navigateUp();
+    } else if (e.which === 40) {
+        navigateDown();
+    }
+    });
+
+    });
+</script>
+<style>
+    *, *:before, *:after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        background: #15181a;
+        font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    }
+    .skw-pages {
+        overflow: hidden;
+        position: relative;
+        height: 100vh;
+    }
+    .skw-page {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+    .skw-page__half {
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100vh;
+        transition: transform 1s;
+    }
+    .skw-page__half--left {
+        left: 0;
+        transform: translate3d(-32.4vh, 100%, 0);
+    }
+    .skw-page__half--right {
+        left: 50%;
+        transform: translate3d(32.4vh, -100%, 0);
+    }
+    .skw-page.active .skw-page__half {
+        transform: translate3d(0, 0, 0);
+    }
+    .skw-page__skewed {
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        width: 140%;
+        height: 100%;
+        transform: skewX(-18deg);
+        background: #000;
+    }
+    .skw-page__half--left .skw-page__skewed {
+        left: -40%;
+    }
+    .skw-page__half--right .skw-page__skewed {
+        right: -40%;
+    }
+    .skw-page__content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-flow: column wrap;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        padding: 0 30%;
+        color: #fff;
+        transform: skewX(18deg);
+        transition: transform 1s, opacity 1s;
+        background-size: cover;
+    }
+    .skw-page__half--left .skw-page__content {
+        padding-left: 30%;
+        padding-right: 30%;
+        transform-origin: 100% 0;
+    }
+    .skw-page__half--right .skw-page__content {
+        padding-left: 30%;
+        padding-right: 30%;
+        transform-origin: 0 100%;
+    }
+    .skw-page.inactive .skw-page__content {
+        opacity: 0.5;
+        transform: skewX(18deg) scale(0.95);
+    }
+    .skw-page__heading {
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        font-size: 25px;
+        text-align: center;
+    }
+    .skw-page__description {
+        font-size: 18px;
+        text-align: center;
+    }
+    .skw-page__link {
+        color: #ffa0a0;
+    }
+    .skw-page-1 .skw-page__half--left .skw-page__content {
+        background-image: url('/static/images/hostel.jpg');
+    }
+    .skw-page-1 .skw-page__half--right .skw-page__content {
+        background: #292929;
+    }
+    .skw-page-2 .skw-page__half--left .skw-page__content {
+        background: #292929;
+    }
+    .skw-page-2 .skw-page__half--right .skw-page__content {
+        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-2.jpg');
+    }
+    .skw-page-3 .skw-page__half--left .skw-page__content {
+        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/mousover-img-2.jpg');
+    }
+    .skw-page-3 .skw-page__half--right .skw-page__content {
+        background: #292929;
+    }
+    .skw-page-4 .skw-page__half--left .skw-page__content {
+        background: #292929;
+    }
+    .skw-page-4 .skw-page__half--right .skw-page__content {
+        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-3.jpg');
+    }
+    .skw-page-5 .skw-page__half--left .skw-page__content {
+        background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/img-test.jpg');
+    }
+    .skw-page-5 .skw-page__half--right .skw-page__content {
+        background: #292929;
+    }
+    
+</style>
+<body>
+    <div class="skw-pages">
+        <div class="skw-page skw-page-1 active">
+          <div class="skw-page__half skw-page__half--left">
+            <div class="skw-page__skewed">
+              <div class="skw-page__content"></div>
+            </div>
+          </div>
+          <div class="skw-page__half skw-page__half--right">
+            <div class="skw-page__skewed">
+              <div class="skw-page__content">
+                <h2 class="skw-page__heading">Hostel Infrastructure</h2>
+                <!-- <p class="skw-page__description">Just scroll down</p> -->
+                <p class="skw-page__description">Two separate exclusive boys and girls hostel – 8 storied buildings which can accommodate 500 students each.</p>
+                <p class="skw-page__description">Single, 2 , 3 & 8 Bedded accommodation</p>
+                <p class="skw-page__description">Optional A/C facility</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="skw-page skw-page-2">
+          <div class="skw-page__half skw-page__half--left">
+            <div class="skw-page__skewed">
+              <div class="skw-page__content">
+                <h2 class="skw-page__heading">Sports Activites</h2>
+                <p class="skw-page__description">State of the art Gym & Indoor games</p>
+                <p class="skw-page__description">WIFI connectivity</p>
+              </div>
+            </div>
+          </div>
+          <div class="skw-page__half skw-page__half--right">
+            <div class="skw-page__skewed">
+              <div class="skw-page__content"></div>
+            </div>
+          </div>
+        </div>
+        <div class="skw-page skw-page-3">
+          <div class="skw-page__half skw-page__half--left">
+            <div class="skw-page__skewed">
+              <div class="skw-page__content"></div>
+            </div>
+          </div>
+          <div class="skw-page__half skw-page__half--right">
+            <div class="skw-page__skewed">
+              <div class="skw-page__content">
+                <h2 class="skw-page__heading">Facilities</h2>
+                <p class="skw-page__description">24/7 in house medical care with 1000 beded Multi-Speciality Hospital within the campus</p>
+                <p class="skw-page__description">Entertainment halls with multi channel television facility</p>
+                <p class="skw-page__description">Open air movie screening facility for weekly movie shows</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="skw-page skw-page-4">
+          <div class="skw-page__half skw-page__half--left">
+            <div class="skw-page__skewed">
+              <div class="skw-page__content">
+                <h2 class="skw-page__heading">Page 4</h2>
+                <!-- <p class="skw-page__description">Ok, ok, just one more scroll!</p> -->
+                <p class="skw-page__description">Exclusive visitors lounge</p>
+                <p class="skw-page__description">Treated RO water in all the floors for drinking purpose.</p>
+                <p class="skw-page__description">Solar hot water for bathing.</p>
+                <p class="skw-page__description">Clean Hygienic environment</p>
+              </div>
+            </div>
+          </div>
+          <div class="skw-page__half skw-page__half--right">
+            <div class="skw-page__skewed">
+              <div class="skw-page__content"></div>
+            </div>
+          </div>
+        </div>
+        <div class="skw-page skw-page-5">
+          <div class="skw-page__half skw-page__half--left">
+            <div class="skw-page__skewed">
+              <div class="skw-page__content"></div>
+            </div>
+          </div>
+          <div class="skw-page__half skw-page__half--right">
+            <div class="skw-page__skewed">
+              <div class="skw-page__content">
+                <h2 class="skw-page__heading">Security</h2>
+                <!-- <p class="skw-page__description"></p> -->
+                  <!-- <a class="skw-page__link" href="https://codepen.io/suez/pens/public/" target="_blank">my other pens</a> and follow me on 
+                  <a class="skw-page__link" href="https://twitter.com/NikolayTalanov" target="_blank">Twitter</a> -->
+                  <p class="skw-page__description">24/7 security vigilance</p>
+                  <p class="skw-page__description">Smoking – free campus</p>
+                  <p class="skw-page__description">Ragging – free campus</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+
+{% endblock %}
