@@ -1,0 +1,131 @@
+{% extends 'base2.html' %}
+{% block title %} Dashboard {% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+</head>
+<style>
+  /* Reset some default styles for better consistency */
+  body, h1, h2, h3, p, table {
+      margin: 0;
+      padding: 0;
+  }
+
+  body {
+      font-family: Arial, sans-serif;
+      background-color: #8192d6;
+  }
+
+  /* Style for the table */
+  table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      /* background-color: black; */
+  }
+
+  /* Style for table headers */
+  th, td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid #000000;
+  }
+
+  /* Background color for header cells */
+  th {
+      background-color: #81869b;
+  }
+
+  /* Style for alternating row colors */
+  tbody tr:nth-child(even) {
+      background-color: #8c98ca;
+  }
+
+  /* Add some spacing between table cells */
+  td {
+      padding-left: 15px;
+  }
+
+  /* Style for the welcome message */
+  h2 {
+      margin-top: 20px;
+  }
+
+  /* Style for user details paragraph */
+  p {
+      margin-bottom: 20px;
+  }
+
+  /* Responsive 
+  styles 
+  for 
+  small 
+  screens */
+
+  @media (max-width: 600px) {
+      th, td {
+          padding: 8px;
+      }
+  }
+
+</style>
+<body>
+  <h2>Welcome to the Dashboard</h2>
+  <p>Hello, {{ user.username }}!</p>
+  {% if user.is_student %}
+    <h3>Your Room Details</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Hostel</th>
+          <th>Room Number</th>
+          <th>Room Type</th>
+          <th>Availability</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for room in room_details %}
+          <tr>
+            <td>{{ room.hostel }}</td>
+            <td>{{ room.room_number }}</td>
+            <td>{{ room.room_type }}</td>
+            <td>{{ room.availability }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+  {% endif %}
+
+    {% if user.is_staff %}
+      <h3>Students' Details</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Registration Number</th>
+            <th>Phone Number</th>
+            <th>Parent Phone Number</th>
+            <th>Room Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for student in student_details %}
+            <tr>
+              <td>{{ student.name }}</td>
+              <td>{{ student.registration_number }}</td>
+              <td>{{ student.phone_number }}</td>
+              <td>{{ student.parent_phone_number }}</td>
+              <td>{{ student.room_type }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+</body>
+</html>
+{% endblock %}
